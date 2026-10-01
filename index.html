@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Probe is a focused workspace for testing web application endpoints." />
+    <title>Probe — Web application tester</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Probe home">
+        <span class="brand-mark"><span></span></span>
+        <span>probe</span>
+      </a>
+      <div class="topbar-actions">
+        <span class="environment"><i></i> Local environment</span>
+        <button class="icon-button" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
+        </button>
+        <div class="avatar">AS</div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">WORKSPACE / API CHECK</p>
+          <h1>Test before you <em>ship.</em></h1>
+          <p class="hero-copy">Send a request, define what success looks like, and get a clear answer in seconds.</p>
+        </div>
+        <div class="run-count"><strong id="runCount">12</strong><span>runs today</span></div>
+      </section>
+
+      <div class="workspace">
+        <section class="panel request-panel" aria-labelledby="requestTitle">
+          <div class="panel-heading">
+            <div><span class="step">01</span><h2 id="requestTitle">Build request</h2></div>
+            <button class="text-button" id="resetButton">Reset</button>
+          </div>
+
+          <form id="requestForm">
+            <div class="request-line">
+              <label class="sr-only" for="method">HTTP method</label>
+              <select id="method">
+                <option>GET</option><option>POST</option><option>PUT</option><option>PATCH</option><option>DELETE</option>
+              </select>
+              <label class="sr-only" for="url">Request URL</label>
+              <input id="url" type="text" value="demo://users" placeholder="https://api.example.com/users" spellcheck="false" required />
+              <button class="send-button" type="submit"><span>Run test</span><kbd>⌘ ↵</kbd></button>
+            </div>
+
+            <div class="tabs" role="tablist" aria-label="Request options">
+              <button type="button" class="tab active" data-tab="headers">Headers <span>2</span></button>
+              <button type="button" class="tab" data-tab="body">Body</button>
+            </div>
+            <div class="tab-content" id="headersPanel">
+              <div class="key-value-row"><input aria-label="Header name" value="Content-Type" /><input aria-label="Header value" value="application/json" /><button type="button" class="remove-row" aria-label="Remove header">×</button></div>
+              <div class="key-value-row"><input aria-label="Header name" value="Accept" /><input aria-label="Header value" value="application/json" /><button type="button" class="remove-row" aria-label="Remove header">×</button></div>
+              <button type="button" class="add-button" id="addHeader">+ Add header</button>
+            </div>
+            <div class="tab-content hidden" id="bodyPanel">
+              <textarea id="requestBody" aria-label="JSON request body" spellcheck="false">{
+  "name": "Ada Lovelace",
+  "role": "Engineer"
+}</textarea>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel assertions-panel" aria-labelledby="assertionsTitle">
+          <div class="panel-heading">
+            <div><span class="step">02</span><h2 id="assertionsTitle">Define success</h2></div>
+            <span class="check-count">3 checks</span>
+          </div>
+          <div class="assertions">
+            <label class="assertion"><span class="handle">⠿</span><span class="assertion-label">Status is</span><select id="expectedStatus"><option>200</option><option>201</option><option>204</option><option>400</option><option>404</option></select><span class="assertion-icon">✓</span></label>
+            <label class="assertion"><span class="handle">⠿</span><span class="assertion-label">Response time is under</span><input id="expectedTime" type="number" value="500" min="1" /><span class="unit">ms</span><span class="assertion-icon">✓</span></label>
+            <label class="assertion"><span class="handle">⠿</span><span class="assertion-label">Body contains</span><input id="expectedBody" value="users" /><span class="assertion-icon">✓</span></label>
+          </div>
+          <button type="button" class="add-check">+ Add another check</button>
+        </section>
+
+        <section class="panel results-panel" aria-labelledby="resultsTitle">
+          <div class="panel-heading">
+            <div><span class="step">03</span><h2 id="resultsTitle">Results</h2></div>
+            <div class="result-meta"><span id="statusBadge" class="status-badge">200 OK</span><span id="timeBadge">128 ms</span><span id="sizeBadge">1.2 KB</span></div>
+          </div>
+          <div id="resultBanner" class="result-banner">
+            <div class="result-check">✓</div>
+            <div><strong id="resultTitle">All checks passed</strong><span id="resultSubtitle">3 of 3 assertions completed successfully</span></div>
+            <time id="resultTime">Just now</time>
+          </div>
+          <div class="response-header"><h3>Response</h3><div class="response-tabs"><button class="active">Pretty</button><button>Raw</button></div><button id="copyButton" class="copy-button">Copy</button></div>
+          <pre id="responseOutput" aria-live="polite"><code>{
+  <span class="json-key">"users"</span>: [
+    { <span class="json-key">"id"</span>: <span class="json-number">1</span>, <span class="json-key">"name"</span>: <span class="json-string">"Ada Lovelace"</span>, <span class="json-key">"role"</span>: <span class="json-string">"Engineer"</span> },
+    { <span class="json-key">"id"</span>: <span class="json-number">2</span>, <span class="json-key">"name"</span>: <span class="json-string">"Grace Hopper"</span>, <span class="json-key">"role"</span>: <span class="json-string">"Scientist"</span> }
+  ],
+  <span class="json-key">"total"</span>: <span class="json-number">2</span>
+}</code></pre>
+        </section>
+      </div>
+    </main>
+    <footer><span><i></i> All systems operational</span><span>Probe v1.0</span></footer>
+    <div id="toast" role="status" aria-live="polite">Copied to clipboard</div>
+    <script src="app.js"></script>
+  </body>
+</html>
