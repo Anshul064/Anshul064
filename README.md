@@ -1,10 +1,29 @@
-- 👋 Hi, I’m @Anshul064
-- 👀 I’m interested in Full stack,Machine learning and Neural Networks.
-- 🌱 I’m currently learning Web Devlopment and have some knowledge about machine learning.
-- 💞️ I’m looking forward on grabbing an Internship which might give me a oppurtunity for doing good gains in my life.
-- 📫 How to reach me https://novoresume.com/editor/resume/bee330c0-f26d-11ec-af02-071a31e857af
+# Probe — Web Application Tester
 
-<!---
-Anshul064/Anshul064 is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+Probe is a lightweight, browser-based workspace for checking HTTP endpoints. Build a request, add expectations, run it, and review timing, status, headers, and response data without installing anything.
+
+## Features
+
+- Request builder with HTTP method, URL, headers, and JSON body
+- Reusable status, response-time, and body-content checks
+- Clear pass/fail summary and response inspector
+- Built-in demo endpoint so the interface can be explored immediately
+- Responsive, accessible interface with no build step or dependencies
+
+## Run locally
+
+```bash
+python3 -m http.server 4173
+```
+
+Then open <http://localhost:4173>.
+
+> Requests made by the tester are subject to the target server's CORS policy. Use the built-in demo URL (`demo://users`) to try the full experience locally.
+
+## Project structure
+
+```text
+├── index.html  # Application shell
+├── styles.css  # Responsive visual system
+└── app.js      # Request runner and assertion engine
+```
